@@ -1,0 +1,80 @@
+﻿
+<link href="@Url.AdminAssets("galleryStyle/styles/main.css")" rel="stylesheet" media="screen, print" type="text/css">
+<script src="@Url.AdminAssets("galleryStyle/lib/modernizr-2.6.2.js")"></script>
+@model IEnumerable<GetGalleryViewModel>
+
+<section class="panel panel-with-borders">
+    <div class="panel-heading">
+        <div class="heading-buttons pull-right">
+            <button type="button" class="btn btn-primary margin-inline" data-toggle="modal" data-target="#example1">
+                <i class="icmn-plus3"></i>
+                Thêm album
+            </button>
+            <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form method="post" action="@Url.Action("AddGallery", "Gallery")">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Chọn hình ảnh</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <input type="text" class="form-control" name="Name" placeholder="Tên album" /><br/>
+                                <textarea rows="3" type="text" class="form-control" name="Description" placeholder="Mô tả album" ></textarea>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">Huỷ</button>
+                                <input type="submit" class="btn btn-primary" value="Thêm" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3>Thư viện ảnh</h3>
+    </div>
+    <div class="panel-body">
+
+        <div id="container" style="left: 0px;">
+            <section id="content">
+                @if (Model.ToList().Count == 0)
+                {
+                    <h3 style="margin-top: 5%; color: lightsteelblue">Không có album nào để hiển thị !</h3>
+                }
+                <div id="our-work">
+                    <ul>
+                        <!--Foreach start from here-->
+                        @foreach (var item in Model)
+                        {
+                            <li>
+                                <a href="@Url.Action("AlbumIndex", "Gallery", new { albumId = item.Id })">
+                                    <img src="@item.SummaryPhotoUrl" alt="Hình đại diện album">
+                                    <div class="overlay">
+                                        <summary>
+                                            <h2>@item.Name</h2>
+                                            <h3>@Html.TrundicateString(item.Description, 40)</h3>
+                                        </summary>
+                                        <div class="loves"><span>@item.PhotoNumber</span></div>
+                                    </div>
+                                </a>
+                            </li>
+                        }
+
+
+                    </ul>
+                </div>
+
+            </section>
+        </div>
+
+    </div>
+</section>
+
+
+
+<script src="@Url.AdminAssets("galleryStyle/scripts/pyaari-main.1.0.js")"></script>
+

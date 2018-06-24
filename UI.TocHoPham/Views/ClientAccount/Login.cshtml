@@ -1,0 +1,62 @@
+﻿@model LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Đăng nhập nhà họ Phạm</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="@Url.ClientAssets("assets/fonts/iconic/css/material-design-iconic-font.min.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.ClientAssets("assets/css/login.css")">
+    <!--===============================================================	================================-->
+</head>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('@Url.ClientAssets("assets/img/feature-top.jpg'"));">
+            <div class="wrap-login100">
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "login100-form validate-form" }))
+                {
+                    @Html.Hidden("returnUrl", ViewBag.ReturnUrl as string)
+                    @Html.AntiForgeryToken()
+                    <span class="login100-form-logo">
+                        <img src="@Url.ClientAssets("assets/img/logo_hopham3.jpg")" alt="">
+                    </span>
+
+                    <!--<span class="login100-form-title p-b-34 p-t-27">-->
+                    <!--Log in-->
+                    <!--</span>-->
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter username">
+                        @Html.TextBoxFor(_ => _.Username, new { @class= "input100", placeholder = "Tên đăng nhập" })
+                        <span class="focus-input100" data-placeholder="&#xf207;"></span>
+                    </div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        @Html.PasswordFor(_ => _.Password, new { placeholder = "Mật khẩu", @class="input100" })
+                        <span class="focus-input100" data-placeholder="&#xf191;"></span>
+                    </div>
+
+                    <div class="contact100-form-checkbox">
+                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                        <label class="label-checkbox100" for="ckb1">
+                            Ghi nhớ
+                        </label>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">
+                            Đăng nhập
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

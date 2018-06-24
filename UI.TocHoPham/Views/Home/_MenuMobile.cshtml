@@ -1,0 +1,48 @@
+﻿@model IEnumerable<MenuViewModel>
+
+<a href="#" class="crunchify-top"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+
+<div class="uc-mobile-menu uc-mobile-menu-effect">
+    <button type="button" class="close" aria-hidden="true" data-toggle="offcanvas"
+            id="uc-mobile-menu-close-btn">
+        &times;
+    </button>
+    <div>
+        <div>
+            <ul id="menu">
+                @foreach (var item in Model)
+                {
+                    if (item.Children.Count > 0)
+                    {
+                        <li class="dropdown m-menu-fw">
+                            <a href="@Url.Action("")" data-toggle="dropdown" class="dropdown-toggle">
+                                @item.Name
+                                <span><i class="fa fa-angle-down"></i></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="m-menu-content">
+
+                                        <ul class="col-sm-3">
+                                            @foreach (var child in item.Children)
+                                            {
+                                                <li><a href="@Url.Action("")">@child.Name</a></li>
+                                            }
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("")">@item.Name</a></li>
+                    }
+                }
+
+
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- .uc-mobile-menu -->

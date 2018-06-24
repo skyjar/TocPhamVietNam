@@ -1,0 +1,35 @@
+﻿@model IEnumerable<BannerViewModel>
+
+
+<section id="feature_news_section" class="feature_news_section">
+    <div class="container">
+        <div class="row">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <!--For each-->
+                    @foreach (var item in Model)
+                    {
+                        <div class="swiper-slide">
+                            <img src="@item.CoverPhoto" width="100%" height="auto" alt="">
+                            <div class="slide-img">
+                                @item.Title
+                                <i>
+                                    @item.CreatedOn.ToString("dd/MM/yyyy");
+                                </i>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+
+
+        </div>
+        <!-- Row -->
+
+    </div>
+    <!-- container -->
+</section>

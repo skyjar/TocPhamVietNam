@@ -1,0 +1,216 @@
+﻿@model IEnumerable<CategoryHomeViewModel>
+
+
+<!--banner nè-->
+@{ Html.RenderAction("_Banner", "Home"); }
+<!--end banner-->
+<!--bắt đầu tin tức trang chủ-->
+<section id="category_section" class="category_section">
+    <div class="container">
+        <div class="row">
+
+            <!--này phần tin bên trái nè 0000000000000000000000000000-->
+            <div class="col-md-8">
+                <!--// render news here-->
+                @foreach (var item in Model)
+                {
+                    if (item.Posts.Count > 0)
+                    {
+                        <div class="category_section mobile">
+                            <div class="article_title header_pink">
+                                <h2><a href="#" target="_self">@item.Name</a></h2>
+                            </div>
+                            <!----article_title------>
+                            <div class="category_article_wrapper">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="top_article_img">
+                                            <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(0).Id })" target="_self">
+                                                <img class="img-responsive"
+                                                     src="@item.Posts.ElementAt(0).CoverPhoto"
+                                                     alt="feature-top">
+                                            </a>
+                                        </div>
+                                        <!----top_article_img------>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @foreach (var postcategory in item.Posts.ElementAt(0).Categories)
+                                        {
+                                            <span class="tag red">@postcategory.Name</span>
+                                        }
+
+                                        <div class="category_article_title">
+                                            <h2>
+                                                <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(0).Id })" target="_self">
+                                                    @item.Posts.ElementAt(0).Title
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <!----category_article_title------>
+                                        <div class="category_article_date">
+                                            <a href="#">@item.Posts.ElementAt(0).CreatedOn.ToString("dd/MM/yyyy")</a>, đăng bởi: <a href="#">@item.Posts.ElementAt(0).Author</a>
+                                        </div>
+                                        <!----category_article_date------>
+                                        <div class="category_article_content">
+                                            @Html.TrundicateString(item.Posts.ElementAt(0).Body, 200)
+                                        </div>
+                                        <!----category_article_content------>
+                                        <div class="media_social">
+                                            <span>
+                                                <i class="fa fa-comments-o"></i><a href="#">@item.Posts.ElementAt(0).NumberComment</a> bình luận
+                                            </span>
+                                        </div>
+                                        <!----media_social------>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="category_article_wrapper">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @if (item.Posts.Count > 1)
+                                        {
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(1).Id })">
+                                                        <img class="media-object"
+                                                             src="@item.Posts.ElementAt(1).CoverPhoto"
+                                                             alt="Generic placeholder image">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    @foreach (var postcategory in item.Posts.ElementAt(1).Categories)
+                                                    {
+                                                        <span class="tag red">@postcategory.Name</span>
+                                                    }
+
+                                                    <h3 class="media-heading">
+                                                        <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(1).Id })" target="_self">
+                                                            @item.Posts.ElementAt(1).Title
+                                                        </a>
+                                                    </h3>
+                                                    <span class="media-date">
+                                                        <a href="#">@item.Posts.ElementAt(1).CreatedOn.ToString("dd/MM/yyyy")</a>,  đăng bởi: <a href="#">@item.Posts.ElementAt(1).Author</a>
+                                                    </span>
+
+                                                    <div class="media_social">
+                                                        <span><a href="#"><i class="fa fa-comments-o"></i>@item.Posts.ElementAt(1).NumberComment</a> bình luận</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (item.Posts.Count > 3)
+                                        {
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(3).Id })">
+                                                        <img class="media-object"
+                                                             src="@item.Posts.ElementAt(3).CoverPhoto"
+                                                             alt="Generic placeholder image">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    @foreach (var postcategory in item.Posts.ElementAt(3).Categories)
+                                                    {
+                                                        <span class="tag red">@postcategory.Name</span>
+                                                    }
+
+                                                    <h3 class="media-heading">
+                                                        <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(3).Id })" target="_self">
+                                                            @item.Posts.ElementAt(3).Title
+                                                        </a>
+                                                    </h3>
+                                                    <span class="media-date">
+                                                        <a href="#">@item.Posts.ElementAt(3).CreatedOn.ToString("dd/MM/yyyy")</a>,  đăng bởi: <a href="#">@item.Posts.ElementAt(3).Author</a>
+                                                    </span>
+
+                                                    <div class="media_social">
+                                                        <span><a href="#"><i class="fa fa-comments-o"></i>@item.Posts.ElementAt(3).NumberComment</a> bình luận</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if (item.Posts.Count > 2)
+                                        {
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(2).Id })">
+                                                        <img class="media-object"
+                                                             src="@item.Posts.ElementAt(2).CoverPhoto"
+                                                             alt="Generic placeholder image">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    @foreach (var postcategory in item.Posts.ElementAt(2).Categories)
+                                                    {
+                                                        <span class="tag red">@postcategory.Name</span>
+                                                    }
+
+                                                    <h3 class="media-heading">
+                                                        <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(2).Id })" target="_self">
+                                                            @item.Posts.ElementAt(2).Title
+                                                        </a>
+                                                    </h3>
+                                                    <span class="media-date">
+                                                        <a href="#">@item.Posts.ElementAt(2).CreatedOn.ToString("dd/MM/yyyy")</a>,  đăng bởi: <a href="#">@item.Posts.ElementAt(2).Author</a>
+                                                    </span>
+
+                                                    <div class="media_social">
+                                                        <span><a href="#"><i class="fa fa-comments-o"></i>@item.Posts.ElementAt(2).NumberComment</a> bình luận</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        @if (item.Posts.Count > 4)
+                                        {
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(4).Id })">
+                                                        <img class="media-object"
+                                                             src="@item.Posts.ElementAt(4).CoverPhoto"
+                                                             alt="Generic placeholder image">
+                                                    </a>
+                                                </div>
+                                                <div class="media-body">
+                                                    @foreach (var postcategory in item.Posts.ElementAt(4).Categories)
+                                                    {
+                                                        <span class="tag red">@postcategory.Name</span>
+                                                    }
+
+                                                    <h3 class="media-heading">
+                                                        <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Posts.ElementAt(4).Id })" target="_self">
+                                                            @item.Posts.ElementAt(4).Title
+                                                        </a>
+                                                    </h3>
+                                                    <span class="media-date">
+                                                        <a href="#">@item.Posts.ElementAt(4).CreatedOn.ToString("dd/MM/yyyy")</a>,  đăng bởi: <a href="#">@item.Posts.ElementAt(4).Author</a>
+                                                    </span>
+
+                                                    <div class="media_social">
+                                                        <span><a href="#"><i class="fa fa-comments-o"></i>@item.Posts.ElementAt(4).NumberComment</a> bình luận</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="divider"><a href="#">Xem thêm &nbsp;&raquo;</a></p>
+                        </div>
+                    }
+                }
+
+            </div>
+            <!--này phần tin bên trái nè 0000000000000000000000000000-->
+
+            @{ Html.RenderAction("_SuggestPost", "Home"); }
+
+        </div>
+        <!-- Row -->
+
+    </div>
+    <!-- Container -->
+
+</section>
+<!--bắt đầu tin tức trang chủ-->

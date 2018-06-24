@@ -1,0 +1,88 @@
+﻿@model SuggestViewModel
+
+<!--này ben phải nè 00000000000-->
+<div class="col-md-4">
+    <div class="widget">
+        <div class="widget_title widget_black">
+            <h2><a href="#">Tin tức phổ biến</a></h2>
+        </div>
+        <!--For each here-->
+        @foreach (var item in Model.PopularNews)
+        {
+            <div class="media">
+            <div class="media-left">
+                <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Id })">
+                    <img class="media-object" src="@item.CoverPhoto"
+                         alt="Generic placeholder image">
+                </a>
+            </div>
+            <div class="media-body">
+                <h3 class="media-heading">
+                    <a href="@Url.Action("PostIndex", "ClientPost", new { postId = item.Id })" target="_self">
+                        @item.Title
+                    </a>
+                </h3> <span class="media-date">
+                    <a href="#">@item.CreatedOn.ToString("dd/MM/yyyy")</a>, người đăng: <a href="#">@item.Author</a>
+                </span>
+
+                <div class="widget_article_social">
+                    <span>
+                        <a href="single.html" target="_self"><i class="fa fa-comments-o"></i>@item.NumberComment</a> Bình luận
+                    </span>
+                </div>
+            </div>
+        </div>
+        }
+        <!--End for each-->
+        <p class="widget_divider"><a href="#" target="_self">Xem Thêm &nbsp;&raquo;</a></p>
+    </div>
+    <!-- Popular News -->
+
+    <div class="widget m30">
+        <div class="widget_title widget_black">
+            <h2><a href="#">Bình luận nhiều nhất</a></h2>
+        </div>
+
+        <!--For each here-->
+        @foreach (var item in Model.MostComments)
+        {
+            <div class="media">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object" src="@item.CoverPhoto"
+                             alt="Generic placeholder image">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h3 class="media-heading">
+                        <a href="single.html" target="_self">
+                            @item.Title
+                        </a>
+                    </h3> <span class="media-date">
+                        <a href="#">@item.CreatedOn.ToString("dd/MM/yyyy")</a>, người đăng: <a href="#">@item.Author</a>
+                    </span>
+
+                    <div class="widget_article_social">
+                        <span>
+                            <a href="single.html" target="_self"><i class="fa fa-comments-o"></i>@item.NumberComment</a> Bình luận
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }
+        <!--End for each-->
+
+
+        <p class="widget_divider">
+            <a href="#" target="_self">
+                Xem thêm &nbsp;&nbsp;&raquo;
+            </a>
+        </p>
+    </div>
+    <!-- Most Commented News -->
+
+
+    <!--Advertisement -->
+
+</div>
+<!--này bên Phải nè 00000000000-->

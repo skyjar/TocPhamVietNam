@@ -1,0 +1,209 @@
+﻿<link href="~/Content/admin/assets/vendors/angular-tree-control-master/css/tree-control.css" rel="stylesheet" />
+
+@*script cho sweet alert*@
+<script src="https://unpkg.com/sweetalert2@7.21.1/dist/sweetalert2.all.js"></script>
+
+
+<script src="~/Content/admin/assets/vendors/angular/angular.min.js"></script>
+<script src="~/Content/admin/assets/vendors/angular-tree-control-master/angular-tree-control.js"></script>
+<script src="~/Content/admin/assets/vendors/angular-tree-control-master/context-menu.js"></script>
+<style>
+    treecontrol ul {
+        padding: 10px 0
+    }
+
+    treecontrol li {
+        padding-bottom: 20px;
+    }
+
+    treecontrol {
+        font-family: "Lato";
+    }
+
+    div.tree-label {
+        font-size: 16px;
+    }
+
+    treecontrol.tree-classic li .tree-selected {
+        background: transparent !important;
+        font-weight: normal !important
+    }
+</style>
+<section class="panel" ng-app="category-app" ng-controller="category-controller" ng-init="load()">
+    <div class="panel-heading">
+        <h3>
+            Quản lý danh mục
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <a ng-click="createNew(null)" href="javascript:void(0)" class="btn btn-rounded btn-secondary-outline margin-inline">
+                    <i class="fa fa-plus" aria-hidden="true"></i>&nbsp;&nbsp; Tạo mới danh mục cha
+                </a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <treecontrol class="tree-classic" tree-model="categoryList" options="treeOptions">
+                            <button ng-if="node.Childrens" ng-click="createNew(node)" class="btn btn-rounded btn-primary-outline margin-inline" style="margin-right: 5px; margin-left: 50px">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <button ng-click="createUpdate(node, node.Childrens ? 'cha' : 'con')" ng-style="!node.Childrens && {'margin-left' : '50px', 'margin-right' : '5px'} || node.Childrens && {'margin-right' : '5px'}" class="btn btn-rounded btn-success-outline margin-inline">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button ng-click="deleteNode(node.Id)" ng-if="node.Childrens.length == 0 || !node.Childrens" class="btn btn-rounded btn-danger-outline margin-inline" style="margin-right: 50px">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            {{node.Name}}
+
+                        </treecontrol>
+                    </div>
+                    <div class="col-md-6">
+                        <div ng-if="isAdd">
+                            <h3>Thêm danh mục {{type}}</h3>
+                            <form>
+                                <input class="form-control" placeholder="Tên danh mục" required name="Name" type="text" ng-model="$parent.newName" style="margin-bottom: 10px">
+                                <button ng-disabled="!$parent.newName" ng-click="addNewNode()" class="btn btn-rounded btn-success-outline margin-inline">Tạo mới</button>
+                            </form>
+                        </div>
+
+                        <div ng-if="isUpdate">
+                            <h3>Sửa danh mục {{type}}</h3>
+                            <form>
+                                <input class="form-control" placeholder="Tên danh mục" required name="Name" type="text" ng-model="$parent.updateName" style="margin-bottom: 10px">
+                                <button ng-disabled="!$parent.updateName" ng-click="updateNode()" class="btn btn-rounded btn-success-outline margin-inline">Lưu</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    angular.module('category-app', ['treeControl'])
+        .controller('category-controller', function ($scope, $http) {
+            $scope.treeOptions = {
+                nodeChildren: "Childrens",
+                dirSelectable: true
+            }
+            $scope.categoryList = [];
+            $scope.newName = null;
+            $scope.updateName = null;
+            $scope.isAdd = false;
+            $scope.isUpdate = false;
+            $scope.selectedNode = null;
+            $scope.type = '';
+            $scope.load = () => {
+                $http({
+                    method: 'get',
+                    url: '/Admin/Category/GetAllCategory'
+                }).then((data) => {
+                    if (data) {
+                        $scope.categoryList = data.data;
+                        console.log($scope.categoryList);
+                    }
+                }, (er) => {
+                    console.log(er)
+                })
+            };
+
+            $scope.createNew = (node) => {
+                $scope.isAdd = true;
+                $scope.isUpdate = false;
+                switch (node) {
+                    case null: {
+                        $scope.type = 'cha';
+                        $scope.selectedNode = null;
+                        break;
+                    }
+                    default: {
+                        $scope.type = 'con';
+                        $scope.selectedNode = node;
+                        break;
+                    }
+                }
+            }
+
+            $scope.createUpdate = (node, type) => {
+                $scope.isAdd = false;
+                $scope.isUpdate = true;
+                $scope.type = type;
+                $scope.updateName = node.Name;
+                $scope.selectedNode = node;
+            }
+
+            $scope.addNewNode = () => {
+                if ($scope.newName) {
+                    $http({
+                        url: '/Admin/Category/AddCategory',
+                        method: 'post',
+                        data: {
+                            Name: $scope.newName,
+                            ParentId: $scope.selectedNode ? $scope.selectedNode.Id : null
+                        }
+                    }).then(() => {
+                        setDefault();
+                    }, (er) => {
+                        console.log(er);
+                    })
+                }
+            }
+
+            $scope.deleteNode = (id) => {
+                if (id) {
+                    swal({
+                        title: 'Bạn có chắc không?',
+                        text: "Bạn không thể hoàn tác!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Có!'
+                    }).then((result) => {
+                        if (result.value) {
+                            $http({
+                                url: '/Admin/Category/DeteleCategory',
+                                method: 'post',
+                                data: {
+                                    Id: id
+                                }
+                            }).then(() => {
+                                setDefault();
+                            }, (er) => {
+                                console.log(er);
+                            })
+                        }
+                    })
+                }
+            }
+
+            $scope.updateNode = () => {
+                if ($scope.selectedNode && $scope.updateName) {
+                    $http({
+                        url: '/Admin/Category/UpdateCategory',
+                        method: 'post',
+                        data: {
+                            Id: $scope.selectedNode.Id,
+                            Name: $scope.updateName
+                        }
+                    }).then(() => {
+                        setDefault();
+                    }, (er) => {
+                        console.log(er);
+                    })
+                }
+            }
+
+            function setDefault() {
+                swal(
+                    'Thành công',
+                    'Hoàn thành thay đổi!',
+                    'success'
+                )
+                $scope.isUpdate = false;
+                $scope.isAdd = false;
+                $scope.newName = null;
+                $scope.updateName = null;
+                $scope.selectedNode = null;
+                $scope.load();
+            }
+        })
+</script>

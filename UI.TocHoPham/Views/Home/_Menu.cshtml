@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MenuViewModel>
+
+<div class="collapse navbar-collapse" id="#navbar-collapse-1"
+     style="text-align: center">
+    <ul class="nav navbar-nav main-nav" style="display: inline-block">
+        @foreach (var item in Model.ToList())
+        {
+            if (item.Children.Count > 0)
+            {
+                <li class="dropdown m-menu-fw">
+                    <a href="#" data-toggle="dropdown"
+                       class="dropdown-toggle">
+                        @item.Name
+                        <span><i class="fa fa-angle-down"></i></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="m-menu-content">
+                                <ul class="col-sm-3">
+                                    @foreach (var child in item.Children)
+                                    {
+                                        <li><a href="@Url.Action("")">@child.Name</a></li>
+                                    }
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            }
+            else
+            {
+                <li><a href="@Url.Action("")">@item.Name</a></li>
+            }
+        }
+    </ul>
+</div>

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<BannerViewModel>
+
+<section class="panel">
+    <div class="panel-heading">
+        <h3>
+            Quản lý banner
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <br />
+                <div class="margin-bottom-50">
+                    <table class="table table-hover nowrap" id="example2" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Số thứ tự</th>
+                                <th>Tựa đề</th>
+                                <th>Ảnh đại diện</th>
+                                <th>Danh mục</th>
+                                <th>Ngày tạo</th>
+                                <th>Chọn banner</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Số thứ tự</th>
+                                <th>Tựa đề</th>
+                                <th>Ảnh đại diện</th>
+                                <th>Danh mục</th>
+                                <th>Ngày tạo</th>
+                                <th>Chọn banner</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @{ int i = 0;}
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@(++i)</td>
+                                    <td>@Html.TrundicateString(item.Title, 100)</td>
+                                    <td>
+                                        <img style="height: 50%" id="img" src="@item.CoverPhoto" alt="Hình đại diện" />
+                                    </td>
+                                    <td>@Html.TrundicateString(item.CategoryName, 30)</td>
+                                    <td>@item.CreatedOn.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        @if (item.IsBanner)
+                                        {
+                                            <button type="button" onclick="UpdateBanner(@item.Id)" class="btn btn-secondary btn-secondary btn-toggle active" data-toggle="button" aria-pressed="true" autocomplete="off">
+                                                <div class="handle"></div>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" onclick="UpdateBanner(@item.Id)" class="btn btn-secondary btn-secondary btn-toggle" data-toggle="button" aria-pressed="false" autocomplete="off">
+                                                <div class="handle"></div>
+                                            </button>
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Css{
+    <link rel="stylesheet" type="text/css" href="@Url.AdminAssets("assets/common/css/switchBtn.css")">
+}
+
+@section Scripts
+{
+    <script>
+        function UpdateBanner(postId){
+            $.ajax({
+                url: '@Url.Action("UpdateBanner", "Post")',
+                method: 'post',
+                data: { postId },
+                success: function (resp) {
+                    console.log(resp)
+                }
+            })
+        }
+
+        $(function () {
+            $('#example2').DataTable({
+                autoWidth: true,
+                scrollX: true,
+                fixedColumns: true
+            });
+        });
+    </script>
+}

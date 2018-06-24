@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1D8C5BC5-8DAF-4F18-8AA4-65C250EE0E13}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Infrastructure.Entities</RootNamespace>
+    <AssemblyName>Infrastructure.Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\AboutUsConfig.cs" />
+    <Compile Include="Config\CategoryConfig.cs" />
+    <Compile Include="Config\CommentConfig.cs" />
+    <Compile Include="Config\GalleryConfig.cs" />
+    <Compile Include="Config\PhotoConfig.cs" />
+    <Compile Include="Config\LabelConfig.cs" />
+    <Compile Include="Config\PostConfig.cs" />
+    <Compile Include="Database\EntityContext.cs" />
+    <Compile Include="Database\TocHoPhamContext.cs" />
+    <Compile Include="Migrations\201805230928537_5_23_2018_phase1.cs" />
+    <Compile Include="Migrations\201805230928537_5_23_2018_phase1.Designer.cs">
+      <DependentUpon>201805230928537_5_23_2018_phase1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805270815225_sang499.cs" />
+    <Compile Include="Migrations\201805270815225_sang499.Designer.cs">
+      <DependentUpon>201805270815225_sang499.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805310826161_AddIsBannerPrototypeForPost.cs" />
+    <Compile Include="Migrations\201805310826161_AddIsBannerPrototypeForPost.Designer.cs">
+      <DependentUpon>201805310826161_AddIsBannerPrototypeForPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806030729275_gallery.cs" />
+    <Compile Include="Migrations\201806030729275_gallery.Designer.cs">
+      <DependentUpon>201806030729275_gallery.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806030852404_galleryupdate.cs" />
+    <Compile Include="Migrations\201806030852404_galleryupdate.Designer.cs">
+      <DependentUpon>201806030852404_galleryupdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806071407372_photoAlt.cs" />
+    <Compile Include="Migrations\201806071407372_photoAlt.Designer.cs">
+      <DependentUpon>201806071407372_photoAlt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806071428427_aboutus.cs" />
+    <Compile Include="Migrations\201806071428427_aboutus.Designer.cs">
+      <DependentUpon>201806071428427_aboutus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806141437519_postIsPublished.cs" />
+    <Compile Include="Migrations\201806141437519_postIsPublished.Designer.cs">
+      <DependentUpon>201806141437519_postIsPublished.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806151120525_categoryPublish.cs" />
+    <Compile Include="Migrations\201806151120525_categoryPublish.Designer.cs">
+      <DependentUpon>201806151120525_categoryPublish.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core.ApplicationService\Core.ApplicationServices.csproj">
+      <Project>{768B45F5-1BEB-4923-BFD8-C1C33AE36F02}</Project>
+      <Name>Core.ApplicationServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.ObjectModels\Core.ObjectModels.csproj">
+      <Project>{3F1ED8C3-7B96-48C1-9E41-DC30C8DA9E87}</Project>
+      <Name>Core.ObjectModels</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Core.ObjectServices\Core.ObjectServices.csproj">
+      <Project>{7E25CAD9-1E53-4540-A1C4-8AAC89B3339D}</Project>
+      <Name>Core.ObjectServices</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201805230928537_5_23_2018_phase1.resx">
+      <DependentUpon>201805230928537_5_23_2018_phase1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805270815225_sang499.resx">
+      <DependentUpon>201805270815225_sang499.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805310826161_AddIsBannerPrototypeForPost.resx">
+      <DependentUpon>201805310826161_AddIsBannerPrototypeForPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806030729275_gallery.resx">
+      <DependentUpon>201806030729275_gallery.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806030852404_galleryupdate.resx">
+      <DependentUpon>201806030852404_galleryupdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806071407372_photoAlt.resx">
+      <DependentUpon>201806071407372_photoAlt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806071428427_aboutus.resx">
+      <DependentUpon>201806071428427_aboutus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806141437519_postIsPublished.resx">
+      <DependentUpon>201806141437519_postIsPublished.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806151120525_categoryPublish.resx">
+      <DependentUpon>201806151120525_categoryPublish.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,96 @@
+﻿@model Gallery
+
+<section class="panel">
+    <div class="panel-heading">
+        <div class="heading-buttons pull-right">
+            <a href="@Url.Action("DeleteGallery", "Gallery", new { galleryId = Model.Id })" class="btn btn-danger margin-inline">
+                <i class="icmn-bin"></i>
+                Xóa album
+            </a>
+
+            <button type="button" class="btn btn-primary margin-inline" data-toggle="modal" data-target="#example1">
+                <i class="icmn-plus3"></i>
+                Thêm ảnh
+            </button>
+            <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form method="post" action="@Url.Action("AddPhoto", "Gallery")">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">Chọn hình ảnh</h4>
+                            </div>
+                            <div class="modal-body">
+                                <input type="file" class="form-control" id="addPhoto" accept="image/*" />
+                                <img style="width: 30%; height: 10%" id="img" src="https://increasify.com.au/wp-content/uploads/2016/08/default-image.png" alt="Hình ảnh" />
+                                <br /><br /><br />
+                                <input type="text" name="Alternative" class="form-control" placeholder="Nhập miêu tả ảnh" />
+                                <input type="text" hidden name="GalleryId" value="@Model.Id" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">Huỷ</button>
+                                <input type="submit" class="btn btn-primary" value="Thêm" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <h3>@Model.Name</h3>
+        <p>
+            @Model.Description
+        </p>
+    </div>
+    <div class="panel-body">
+        <div class="app-gallery clearfix">
+            @if (Model.Photos.Count == 0)
+            {
+                <h3 style="margin-top: 5%; color: lightsteelblue">Không có hình nào để hiển thị !</h3>
+            }
+            @foreach (var item in Model.Photos)
+            {
+                <div class="app-gallery-item edit"
+                     style="background-image: url(@item.Url)">
+                    <div class="app-gallery-item-hover">
+                        <div class="btn-group margin-inline">
+                            <a href="@Url.Action("DeletePhoto", "Gallery", new { photoId = item.Id })">
+                                <button type="button" class="btn">
+                                    <i class="icmn-bin3"></i>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('#addPhoto').change(function () {
+                var input = this;
+                var url = $(this).val();
+                var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+                if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#img').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+                else {
+                    $('#img').attr('src', 'https://increasify.com.au/wp-content/uploads/2016/08/default-image.png');
+                }
+            });
+
+        });
+    </script>
+}
